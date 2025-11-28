@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>کارت ساز نینو</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: #000000;
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background: #1a1a1a;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(255,255,255,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #ffd700;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #cccccc;
+            font-size: 16px;
+        }
+        
+        .form-section {
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ffffff;
+            font-weight: 500;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #444444;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            background: #2a2a2a;
+            color: #ffffff;
+            transition: all 0.3s;
+        }
+        
+        .form-input:focus {
+            border-color: #ffd700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+        }
+        
+        .card-input {
+            letter-spacing: 3px;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: #ffd700;
+            color: #000000;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
+        }
+        
+        .card-result {
+            display: none;
+            margin-top: 30px;
+            animation: fadeIn 0.3s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .bank-card {
+            position: relative;
+            height: 260px;
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+            border-radius: 20px;
+            padding: 30px;
+            color: white;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            overflow: hidden;
+        }
+        
+        /* رنگ‌های دقیق بر اساس درخواست شما */
+        .card-tejarat { 
+            background: linear-gradient(135deg, #87CEEB 0%, #4682B4 100%);
+            color: white;
+        }
+        .card-melli { 
+            background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%);
+            color: #333;
+        }
+        .card-mellat { 
+            background: linear-gradient(135deg, #FFD700 0%, #FFEC8B 100%);
+            color: #333;
+        }
+        .card-sepah { 
+            background: linear-gradient(135deg, #C0C0C0 0%, #A9A9A9 100%);
+            color: #333;
+        }
+        .card-saderat { 
+            background: linear-gradient(135deg, #6495ED 0%, #4169E1 100%);
+            color: white;
+        }
+        .card-saman { 
+            background: linear-gradient(135deg, #87CEEB 0%, #4682B4 100%);
+            color: white;
+        }
+        .card-sina { 
+            background: linear-gradient(to bottom, #87CEEB 0%, #87CEEB 50%, #FFD700 50%, #FFD700 100%);
+            color: #333;
+        }
+        .card-shahr { 
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%);
+            color: white;
+        }
+        .card-pasargad { 
+            background: linear-gradient(135deg, #000000 0%, #2F4F4F 100%);
+            color: white;
+        }
+        .card-parsian { 
+            background: linear-gradient(135deg, #FFFFFF 0%, #F8F8F8 100%);
+            color: #333;
+            border: 2px solid #e0e0e0;
+        }
+        .card-karafarin { 
+            background: linear-gradient(135deg, #32CD32 0%, #228B22 100%);
+            color: white;
+        }
+        .card-mehr { 
+            background: linear-gradient(135deg, #90EE90 0%, #32CD32 100%);
+            color: #333;
+        }
+        .card-keshavarzi { 
+            background: linear-gradient(135deg, #228B22 0%, #006400 100%);
+            color: white;
+        }
+        .card-dey { 
+            background: linear-gradient(135deg, #6495ED 0%, #FFFFFF 50%, #6495ED 100%);
+            color: #333;
+        }
+        .card-ansar { 
+            background: linear-gradient(135deg, #FF8C00 0%, #FF4500 100%);
+            color: white;
+        }
+        .card-maskan { 
+            background: linear-gradient(135deg, #FFFFFF 0%, #FF8C00 100%);
+            color: #FF8C00;
+            border: 2px solid #FF8C00;
+        }
+        
+        .card-pattern {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.3) 10px,
+                rgba(255,255,255,0.3) 20px
+            );
+        }
+        
+        .card-chip {
+            width: 55px;
+            height: 45px;
+            background: linear-gradient(135deg, #ffd700 0%, #ffa500 100%);
+            border-radius: 8px;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-chip:after {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            right: 6px;
+            bottom: 6px;
+            border: 1px solid rgba(255,255,255,0.5);
+            border-radius: 4px;
+        }
+        
+        .card-number-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .card-number {
+            font-size: 24px;
+            letter-spacing: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            direction: ltr;
+            display: inline-block;
+        }
+        
+        .card-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+        
+        .card-holder {
+            font-size: 16px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        
+        .card-expiry {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .card-logo {
+            position: absolute;
+            top: 25px;
+            left: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .bank-icon {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px;
+        }
+        
+        .error-message {
+            color: #ff6b6b;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .bank-error {
+            color: #ff6b6b;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .instructions {
+            background: #2a2a2a;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #cccccc;
+        }
+        
+        .instructions h3 {
+            color: #ffd700;
+            margin-bottom: 10px;
+        }
+        
+        .valid-banks {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .bank-tag {
+            padding: 6px 10px;
+            background: #333333;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 11px;
+            border: 1px solid #555555;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #ffffff;
+        }
+        
+        .bank-tag:hover {
+            background: #ffd700;
+            color: #000000;
+            border-color: #ffd700;
+        }
+
+        /* تنظیمات خاص برای کارت‌هایی که متن تیره دارند */
+        .card-melli .card-number,
+        .card-mellat .card-number,
+        .card-sepah .card-number,
+        .card-sina .card-number,
+        .card-parsian .card-number,
+        .card-mehr .card-number,
+        .card-dey .card-number,
+        .card-maskan .card-number {
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+        }
+
+        .card-melli .card-logo,
+        .card-mellat .card-logo,
+        .card-sepah .card-logo,
+        .card-sina .card-logo,
+        .card-parsian .card-logo,
+        .card-mehr .card-logo,
+        .card-dey .card-logo {
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+        }
+
+        .card-maskan .card-logo {
+            color: #FF8C00;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+        }
+
+        .expiry-input {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎴 کارت ساز نینو</h1>
+            <p>کارت بانکی دلخواه خود را طراحی کنید</p>
+        </div>
+        
+        <div class="form-section">
+            <div class="form-group">
+                <label for="cardNumber">شماره کارت (16 رقم)</label>
+                <input 
+                    type="text" 
+                    class="form-input card-input" 
+                    id="cardNumber" 
+                    placeholder="XXXX-XXXX-XXXX-XXXX"
+                    maxlength="19"
+                    oninput="formatCardNumber(this)"
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="cardHolder">نام دارنده کارت</label>
+                <input 
+                    type="text" 
+                    class="form-input" 
+                    id="cardHolder" 
+                    placeholder="نام و نام خانوادگی"
+                    value="ALI REZAEE"
+                >
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="cardExpiry">تاریخ انقضا (MM/YY)</label>
+                    <input 
+                        type="text" 
+                        class="form-input expiry-input" 
+                        id="cardExpiry" 
+                        placeholder="ماه/سال"
+                        maxlength="5"
+                        oninput="formatExpiry(this)"
+                        value="12/28"
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="bankName">نام بانک</label>
+                    <input 
+                        type="text" 
+                        class="form-input" 
+                        id="bankName" 
+                        placeholder="نام بانک را وارد کنید"
+                        list="bankList"
+                    >
+                    <datalist id="bankList">
+                        <option value="تجارت">
+                        <option value="ملی">
+                        <option value="ملت">
+                        <option value="سپه">
+                        <option value="صادرات">
+                        <option value="سامان">
+                        <option value="سینا">
+                        <option value="شهر">
+                        <option value="پاسارگاد">
+                        <option value="پارسیان">
+                        <option value="کارآفرین">
+                        <option value="مهر ایران">
+                        <option value="کشاورزی">
+                        <option value="دی">
+                        <option value="انصار">
+                        <option value="مسکن">
+                    </datalist>
+                    <div class="bank-error" id="bankError">نام بانک معتبر نیست!</div>
+                </div>
+            </div>
+            
+            <button class="submit-btn" onclick="generateCard()">
+                🎴 ساخت کارت بانکی
+            </button>
+            <div class="error-message" id="errorMessage">
+                لطفاً اطلاعات را به درستی وارد کنید!
+            </div>
+        </div>
+        
+        <div class="card-result" id="cardResult">
+            <div class="bank-card" id="bankCard">
+                <div class="card-pattern"></div>
+                <div class="card-logo" id="cardLogo">
+                    <img src="" alt="Bank Logo" class="bank-icon" id="bankIcon">
+                    <span id="bankNameDisplay">بانک</span>
+                </div>
+                <div class="card-chip"></div>
+                <div class="card-number-container">
+                    <div class="card-number" id="displayCardNumber">XXXX-XXXX-XXXX-XXXX</div>
+                </div>
+                <div class="card-details">
+                    <div class="card-holder" id="displayCardHolder">ALI REZAEE</div>
+                    <div class="card-expiry" id="displayCardExpiry">12/28</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3>بانک‌های معتبر:</h3>
+            <div class="valid-banks" id="validBanks">
+                <!-- بانک‌ها با جاوااسکریپت اضافه می‌شوند -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // اطلاعات کامل بانک‌ها با لینک عکس واقعی
+        const bankInfo = {
+            'تجارت': {
+                name: 'تجارت',
+                color: 'card-tejarat',
+                image: 'https://iconplanet.app/preview/png/64/tejarat-bank-logo--10679.png',
+                prefixes: ['5859', '5858', '6273', '6274']
+            },
+            'ملی': {
+                name: 'ملی',
+                color: 'card-melli',
+                image: 'https://iconplanet.app/preview/png/64/meli-bank-logo--10677.png',
+                prefixes: ['6037', '6104', '5894', '5892']
+            },
+            'ملت': {
+                name: 'ملت',
+                color: 'card-mellat',
+                image: 'https://iconplanet.app/preview/png/64/melat-bank-logo--10680.png',
+                prefixes: ['6104', '9919']
+            },
+            'سپه': {
+                name: 'سپه',
+                color: 'card-sepah',
+                image: 'https://iconplanet.app/preview/png/64/sepah-bank-logo--10686.png',
+                prefixes: ['5892', '6395', '5058']
+            },
+            'صادرات': {
+                name: 'صادرات',
+                color: 'card-saderat',
+                image: 'https://iconplanet.app/preview/png/64/saderat-bank-logo--10678.png',
+                prefixes: ['6037', '6276']
+            },
+            'سامان': {
+                name: 'سامان',
+                color: 'card-saman',
+                image: 'https://iconplanet.app/preview/png/64/saman-bank-logo--10684.png',
+                prefixes: ['6219']
+            },
+            'سینا': {
+                name: 'سینا',
+                color: 'card-sina',
+                image: 'https://iconplanet.app/preview/png/64/sina-bank-logo--10694.png',
+                prefixes: ['6393']
+            },
+            'شهر': {
+                name: 'شهر',
+                color: 'card-shahr',
+                image: 'https://iconplanet.app/preview/png/64/shahr-bank-logo--10698.png',
+                prefixes: ['5028', '5047']
+            },
+            'پاسارگاد': {
+                name: 'پاسارگاد',
+                color: 'card-pasargad',
+                image: 'https://iconplanet.app/preview/png/64/pasargad-bank-logo--10704.png',
+                prefixes: ['5022', '6393']
+            },
+            'پارسیان': {
+                name: 'پارسیان',
+                color: 'card-parsian',
+                image: 'https://iconplanet.app/preview/png/64/parsian-bank-logo--10695.png',
+                prefixes: ['6221', '6278']
+            },
+            'کارآفرین': {
+                name: 'کارآفرین',
+                color: 'card-karafarin',
+                image: 'https://iconplanet.app/preview/png/64/karafarin-bank-logo--10696.png',
+                prefixes: ['6274', '6280']
+            },
+            'مهر ایران': {
+                name: 'مهر ایران',
+                color: 'card-mehr',
+                image: 'https://iconplanet.app/preview/png/64/mehr-iran-bank-logo--10700.png',
+                prefixes: ['6063']
+            },
+            'کشاورزی': {
+                name: 'کشاورزی',
+                color: 'card-keshavarzi',
+                image: 'https://iconplanet.app/preview/png/64/keshavarzi-bank-logo--10688.png',
+                prefixes: ['6037', '6392']
+            },
+            'دی': {
+                name: 'دی',
+                color: 'card-dey',
+                image: 'https://iconplanet.app/preview/png/64/dey-bank-logo--10715.png',
+                prefixes: ['5029']
+            },
+            'انصار': {
+                name: 'انصار',
+                color: 'card-ansar',
+                image: 'https://iconplanet.app/preview/png/64/ansar-bank-logo--10683.png',
+                prefixes: ['6273']
+            },
+            'مسکن': {
+                name: 'مسکن',
+                color: 'card-maskan',
+                image: 'https://iconplanet.app/preview/png/64/maskan-bank-logo--10682.png',
+                prefixes: ['6280']
+            }
+        };
+
+        // نمایش بانک‌های معتبر
+        function displayValidBanks() {
+            const validBanksContainer = document.getElementById('validBanks');
+            validBanksContainer.innerHTML = '';
+            
+            for (const bankName in bankInfo) {
+                const bankTag = document.createElement('div');
+                bankTag.className = 'bank-tag';
+                bankTag.textContent = bankName;
+                bankTag.onclick = () => {
+                    document.getElementById('bankName').value = bankName;
+                };
+                validBanksContainer.appendChild(bankTag);
+            }
+        }
+
+        function formatCardNumber(input) {
+            let value = input.value.replace(/\D/g, '');
+            let formattedValue = '';
+            
+            for (let i = 0; i < value.length; i++) {
+                if (i > 0 && i % 4 === 0) {
+                    formattedValue += '-';
+                }
+                formattedValue += value[i];
+            }
+            
+            input.value = formattedValue;
+        }
+        
+        function formatExpiry(input) {
+            let value = input.value.replace(/\D/g, '');
+            
+            if (value.length >= 2) {
+                let month = value.substring(0, 2);
+                let year = value.substring(2, 4);
+                
+                // محدودیت ماه (1 تا 12)
+                if (month > 12) {
+                    month = '12';
+                }
+                if (month < 1) {
+                    month = '01';
+                }
+                
+                input.value = month + '/' + year;
+            }
+        }
+        
+        function validateBankName(bankName) {
+            return bankInfo.hasOwnProperty(bankName);
+        }
+        
+        function generateCard() {
+            const cardNumber = document.getElementById('cardNumber').value;
+            const cardHolder = document.getElementById('cardHolder').value;
+            const cardExpiry = document.getElementById('cardExpiry').value;
+            const bankName = document.getElementById('bankName').value;
+            
+            const cardResult = document.getElementById('cardResult');
+            const errorMessage = document.getElementById('errorMessage');
+            const bankError = document.getElementById('bankError');
+            const bankCard = document.getElementById('bankCard');
+            const displayCardNumber = document.getElementById('displayCardNumber');
+            const displayCardHolder = document.getElementById('displayCardHolder');
+            const displayCardExpiry = document.getElementById('displayCardExpiry');
+            const bankNameDisplay = document.getElementById('bankNameDisplay');
+            const bankIcon = document.getElementById('bankIcon');
+            
+            // اعتبارسنجی
+            const cleanCardNumber = cardNumber.replace(/\D/g, '');
+            let isValid = true;
+            
+            // پاک کردن خطاهای قبلی
+            errorMessage.style.display = 'none';
+            bankError.style.display = 'none';
+            
+            // اعتبارسنجی شماره کارت
+            if (cleanCardNumber.length !== 16) {
+                errorMessage.style.display = 'block';
+                isValid = false;
+            }
+            
+            // اعتبارسنجی نام دارنده
+            if (!cardHolder.trim()) {
+                errorMessage.style.display = 'block';
+                isValid = false;
+            }
+            
+            // اعتبارسنجی تاریخ انقضا
+            const expiryParts = cardExpiry.split('/');
+            if (!cardExpiry || cardExpiry.length !== 5 || expiryParts.length !== 2) {
+                errorMessage.style.display = 'block';
+                isValid = false;
+            } else {
+                const month = parseInt(expiryParts[0]);
+                if (month < 1 || month > 12) {
+                    errorMessage.style.display = 'block';
+                    isValid = false;
+                }
+            }
+            
+            // اعتبارسنجی نام بانک
+            if (!bankName.trim() || !validateBankName(bankName)) {
+                bankError.style.display = 'block';
+                isValid = false;
+            }
+            
+            if (!isValid) {
+                cardResult.style.display = 'none';
+                return;
+            }
+            
+            // نمایش اطلاعات روی کارت
+            displayCardNumber.textContent = cardNumber;
+            displayCardHolder.textContent = cardHolder.toUpperCase();
+            displayCardExpiry.textContent = cardExpiry;
+            
+            // تنظیم ظاهر کارت بر اساس بانک انتخاب شده
+            const bank = bankInfo[bankName];
+            
+            // حذف کلاس‌های قبلی
+            bankCard.className = 'bank-card';
+            bankCard.classList.add(bank.color);
+            
+            // تنظیم نام و عکس بانک
+            bankNameDisplay.textContent = bank.name;
+            bankIcon.src = bank.image;
+            bankIcon.alt = bank.name;
+            
+            // نمایش کارت
+            cardResult.style.display = 'block';
+            
+            // اسکرول به کارت
+            cardResult.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // امکان ارسال با دکمه Enter
+        document.getElementById('cardNumber').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                generateCard();
+            }
+        });
+        
+        // نمایش بانک‌های معتبر هنگام لود صفحه
+        window.addEventListener('load', function() {
+            displayValidBanks();
+            document.getElementById('cardNumber').focus();
+        });
+
+        // اعتبارسنجی لحظه‌ای نام بانک
+        document.getElementById('bankName').addEventListener('input', function() {
+            const bankError = document.getElementById('bankError');
+            if (this.value.trim() && !validateBankName(this.value)) {
+                bankError.style.display = 'block';
+            } else {
+                bankError.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
